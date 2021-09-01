@@ -4,8 +4,7 @@ import os
 import tensorflow as tf
 import functools
 
-####### STUDENTS FILL THIS OUT ######
-#Question 3
+
 def reduce_dimension_ndc(df, ndc_df):
     '''
     df: pandas dataframe, input dataset
@@ -16,7 +15,7 @@ def reduce_dimension_ndc(df, ndc_df):
     df['generic_drug_name'] = df.apply(lambda x: ndc_df[ndc_df['NDC_Code'] == x['ndc_code']]['Non-proprietary Name'].iloc[0] if x['ndc_code'] in ndc_df['NDC_Code'].values else np.nan , axis=1)
     return df
 
-#Question 4
+
 def select_first_encounter(df):
     '''
     df: pandas dataframe, dataframe with all encounters
@@ -40,7 +39,6 @@ def select_first_encounter(df):
     return df_sorted[df_sorted['encounter_id'].isin(last_encounter_values)]
 
 
-#Question 6
 def patient_dataset_splitter(df, patient_key='patient_nbr'):
     '''
     df: pandas dataframe, input dataset that will be split
@@ -60,8 +58,6 @@ def patient_dataset_splitter(df, patient_key='patient_nbr'):
     test = df[df[patient_key].isin(unique_values[round(total_values * 0.8):])].reset_index(drop = True)
     
     return train, validation, test
-
-#Question 7
 
 def create_tf_categorical_feature_cols(categorical_col_list,
                               vocab_dir='./diabetes_vocab/'):
@@ -84,7 +80,6 @@ def create_tf_categorical_feature_cols(categorical_col_list,
         output_tf_list.append(one_hot)
     return output_tf_list
 
-#Question 8
 def normalize_numeric_with_zscore(col, mean, std):
     '''
     This function can be used in conjunction with the tf feature column for normalization
@@ -107,7 +102,6 @@ def create_tf_numeric_feature(col, MEAN, STD, default_value=0):
     
     return tf.feature_column.numeric_column(key=col, default_value = default_value, normalizer_fn = normalizer, dtype = tf.float64)
 
-#Question 9
 def get_mean_std_from_preds(diabetes_yhat):
     '''
     diabetes_yhat: TF Probability prediction object
@@ -116,7 +110,6 @@ def get_mean_std_from_preds(diabetes_yhat):
     s = diabetes_yhat.stddev()
     return m, s
 
-# Question 10
 def get_student_binary_prediction(col):
     '''
     df: pandas dataframe prediction output dataframe
